@@ -74,6 +74,32 @@
     });
   }
 
+  /* ---------- Google reviews marquee ---------- */
+  var track = document.querySelector('.review-track');
+  if (track) {
+    var firstRow = track.querySelector('.review-row');
+    if (reduceMotion || !firstRow) {
+      /* leave it as a single, natively scrollable row */
+    } else {
+      var clone = firstRow.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+
+      var marqueeTween = gsap.to(track, {
+        xPercent: -50,
+        duration: 46,
+        ease: 'none',
+        repeat: -1
+      });
+
+      var trackWrap = document.querySelector('.review-track-wrap');
+      trackWrap.addEventListener('mouseenter', function(){ marqueeTween.pause(); });
+      trackWrap.addEventListener('mouseleave', function(){ marqueeTween.play(); });
+      trackWrap.addEventListener('focusin', function(){ marqueeTween.pause(); });
+      trackWrap.addEventListener('focusout', function(){ marqueeTween.play(); });
+    }
+  }
+
   /* ---------- Quote form (no backend wired up yet) ---------- */
   var form = document.querySelector('.quote-form');
   if (form) {
